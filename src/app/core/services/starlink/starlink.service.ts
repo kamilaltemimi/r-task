@@ -75,8 +75,8 @@ export class StarlinkService {
     return reverseDate.join('-');
   }
 
-  private getLaunchDetails(launchId: string): Observable<any> {
-    return this.http.get<any>(`${this.URL}/launches/${launchId}`).pipe(
+  private getLaunchDetails(launchId: string): Observable<Launch> {
+    return this.http.get<Launch>(`${this.URL}/launches/${launchId}`).pipe(
       map((launch: Launch) => {
         return { ...launch, date_local: this.formatDate(launch.date_local) };
       })
