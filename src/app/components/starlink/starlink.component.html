@@ -1,0 +1,55 @@
+<div class="container flex flex-col items-center">
+  <h1>Starlink Stats</h1>
+
+  <div class="starlink-list">
+    <h2>Height divisible by 3</h2>
+    <ul class="starlink__content_list">
+      @for (starlink of starlinkData().divisibleBy3; track starlink.id) {
+        <li (click)="selectStarlink(starlink.id)">
+          {{ starlink.objectName }} - {{ starlink.countryCode }} -
+          {{ starlink.heightKm }} km -
+          {{ starlink.creationDate | date: 'dd-MM-yyyy' }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="starlink-list">
+    <h2>Height divisible by 5</h2>
+    <ul class="starlink__content_list">
+      @for (starlink of starlinkData().divisibleBy5; track starlink.id) {
+        <li (click)="selectStarlink(starlink.id)">
+          {{ starlink.objectName }} - {{ starlink.countryCode }} -
+          {{ starlink.heightKm }} km -
+          {{ starlink.creationDate | date: 'dd-MM-yyyy' }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="starlink-list">
+    <h2>Height divisible by both 3 and 5</h2>
+    <ul class="starlink__content_list">
+      @for (starlink of starlinkData().isDivisibleBy3and5; track starlink.id) {
+        <li (click)="selectStarlink(starlink.id)">
+          {{ starlink.objectName }} - {{ starlink.countryCode }} -
+          {{ starlink.heightKm }} km -
+          {{ starlink.creationDate | date: 'dd-MM-yyyy' }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="starlink-list">
+    <h2>Height not divisible by 3 or 5</h2>
+    <ul class="starlink__content_list">
+      @for (starlink of starlinkData().notDivisibleBy3And5; track starlink.id) {
+        <li (click)="selectStarlink(starlink.id)">
+          {{ starlink.objectName }} - {{ starlink.countryCode }} -
+          {{ starlink.heightKm }} km -
+          {{ starlink.creationDate | date: 'dd-MM-yyyy' }}
+        </li>
+      }
+    </ul>
+  </div>
+</div>

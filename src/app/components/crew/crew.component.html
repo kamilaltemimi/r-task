@@ -1,0 +1,18 @@
+<div class="crew flex w-full justify-center">
+  <div class="crew__content_container">
+    <a class="starlink_tag" [routerLink]="'starlink-stats'"
+      >Click to get starlink stats</a
+    >
+    <h1 class="crew__content_title">Select crew member</h1>
+    <ul class="crew__content_list">
+      @for (member of crewData$ | async; track member.id) {
+        <li
+          (click)="selectCrewMember(member)"
+          class="crew__content_listitem flex items-center justify-center"
+        >
+          {{ member.name }}: {{ member.id }}
+        </li>
+      }
+    </ul>
+  </div>
+</div>

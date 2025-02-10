@@ -1,0 +1,41 @@
+<div class="starlink_stats__container flex justify-center">
+  <div class="starlink_stats__content">
+    <h2 class="starlink_stats__name">
+      {{ launchDetails()?.id }}
+    </h2>
+    <p class="starlink_stats__country">
+      <span class="stats_field">Result:</span>
+      {{ launchDetails()?.success ? 'success' : 'fail' }}
+    </p>
+    <div class="breakline"></div>
+    <p class="starlink_stats__date">
+      <span class="stats_field">Date:</span>
+      {{
+        launchDetails()?.date_local!.split('T')[0]
+          ? launchDetails()?.date_local!.split('T')[0]
+          : 'No data'
+      }}
+    </p>
+    <div class="breakline"></div>
+
+    <p class="starlink_stats__height">
+      <span class="stats_field">Details:</span>
+      {{ launchDetails()?.details ? launchDetails()?.details : 'No data' }}
+    </p>
+    <div class="breakline"></div>
+
+    <h3 class="starlink_stats__launch_info">Launch information</h3>
+    <p class="starlink_stats__launch_date">
+      <span class="stats_field">Launch date:</span>
+      {{
+        launchDetails()?.date_local ? launchDetails()?.date_local : 'No Data'
+      }}
+    </p>
+    <div class="breakline"></div>
+
+    <p class="starlink_stats__launch_date">
+      <span class="stats_field">Total payload mass:</span>
+      {{ totalPayloadMass() ? totalPayloadMass() + ' ' + 'kg' : 'No data' }}
+    </p>
+  </div>
+</div>

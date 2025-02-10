@@ -1,0 +1,50 @@
+<div class="header__container flex items-center justify-center">
+  <div class="header__main_content flex items-center justify-between">
+    <div class="header__logo_section">
+      <div class="header__logo_icons_content flex">
+        <div class="header__logo_icons_container flex items-center">
+          <img
+            class="header__logo_icon"
+            (click)="goToMainPage()"
+            src="header-icons/logo.png"
+          />
+          <img
+            class="header__logo_icon_mobile"
+            (click)="goToMainPage()"
+            src="header-icons/Logomark.png"
+          />
+          <img class="header__cross_icon" src="header-icons/cross.png" />
+          <img
+            class="header__fictional_logo"
+            src="header-icons/fictional-company-logo.png"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="header__user_section flex">
+      <div class="header__help_circle_container flex items-center">
+        <div class="header__help_circle flex items-center justify-center">
+          <img class="header__help_icon" src="header-icons/help-circle.png" />
+          <p class="header__help_text font-semibold">Help</p>
+        </div>
+      </div>
+      <div class="header__user_info_container flex items-center">
+        <img
+          class="header__user_avatar"
+          src="{{ crewMemberData()?.image }}"
+          alt="avatar"
+        />
+        <p class="header__user_name">
+          {{ crewMemberData()?.name }}
+        </p>
+      </div>
+    </div>
+
+    <div class="header__user_section_mobile">
+      <div class="hamburger_wrapper flex items-center justify-center">
+        <img src="header-icons/menu-01.png" />
+      </div>
+    </div>
+  </div>
+</div>

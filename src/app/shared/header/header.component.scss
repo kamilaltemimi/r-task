@@ -1,0 +1,100 @@
+.header__container {
+  height: 80px;
+  width: 100%;
+}
+
+.header__main_content {
+  width: 100%;
+  padding: 0 24px;
+}
+
+.header__logo_section {
+  width: 100%;
+  gap: 8px;
+}
+
+.header__logo_icons_container {
+  gap: 8px;
+}
+.header__logo_icons_content {
+  gap: 40px;
+}
+
+.header__logo_icon {
+  height: 32px;
+  width: 200.33px;
+  cursor: pointer;
+}
+
+.header__cross_icon {
+  height: 16px;
+  width: 16px;
+}
+
+.header__user_section {
+  height: 44px;
+  gap: 24px;
+  color: #344054;
+  font-weight: 600;
+}
+
+.header__user_avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  object-fit: cover;
+  border: 0.5px solid #d0d5dd;
+}
+
+.header__fictional_logo {
+  height: 32px;
+  width: 97.33px;
+}
+
+.header__help_circle {
+  height: 44px;
+  width: 99px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  padding: 10px 0;
+  gap: 6px;
+  font-family: Poppins;
+}
+
+.header__user_info_container {
+  width: 160px;
+  gap: 10px;
+}
+
+.header__user_name {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Poppins;
+}
+
+.hamburger_wrapper {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 700px) {
+  .header__user_section {
+    display: none;
+  }
+  .header__logo_icon {
+    display: none;
+  }
+  .header__logo_icon_mobile {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 701px) {
+  .header__user_section_mobile {
+    display: none;
+  }
+
+  .header__logo_icon_mobile {
+    display: none;
+  }
+}

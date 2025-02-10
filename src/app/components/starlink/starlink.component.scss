@@ -1,0 +1,80 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.starlink-list {
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.starlink-list h2 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+li {
+  background-color: #f4f6f8;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  box-shadow: 0 2px 5px #0000001a;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+  }
+
+  & > span {
+    font-size: 0.9rem;
+    color: #555;
+  }
+}
+
+li .object-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+li .country-code {
+  color: #16a085;
+  font-size: 1rem;
+}
+
+li .height {
+  color: #f39c12;
+  font-size: 1rem;
+}
+
+li .date {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.starlink-list ul {
+  display: flex;
+  flex-direction: column;
+}

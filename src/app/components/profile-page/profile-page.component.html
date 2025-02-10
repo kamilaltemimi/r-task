@@ -1,0 +1,124 @@
+<div class="profile flex w-full justify-center">
+  <div class="profile__content_container">
+    <div class="profile__content flex flex-col">
+      <div class="profile__name_container">
+        <p class="profile__name font-semibold">
+          Your profile, {{ selectedCrewMember()?.name!.split(' ')[0] }}
+        </p>
+      </div>
+
+      <div class="profile__card flex">
+        <img class="profile__image" [src]="selectedCrewMember()?.image" />
+        <div class="profile__image_actions flex flex-col justify-between">
+          <div class="profile__image_title">
+            <p class="profile__image_text">Profile image</p>
+          </div>
+          <div class="image_actions_buttons flex items-center">
+            <button class="replace_button">Replace</button>
+            <button class="remove_button">Remove</button>
+          </div>
+        </div>
+      </div>
+      <div class="profile__stats_container flex items-center justify-center">
+        <div class="profile__stats flex justify-between">
+          <div
+            class="profile__status flex flex-col items-center justify-between"
+          >
+            <p class="profile__status_title">Status</p>
+            <div class="profile__status_text">
+              {{ selectedCrewMember()?.status }}
+            </div>
+          </div>
+          <div
+            class="profile__launches flex flex-col items-center justify-between"
+          >
+            <p class="profile__stats_title">Launches</p>
+            <div class="profile__launches_count flex gap-2">
+              <img src="profile-page-icons/rocket-02.png" />
+              <p class="profile__stats_number">
+                {{ selectedCrewMember()?.launches?.length || 0 }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile__details_container">
+        <div class="profile__details_content_container flex flex-col">
+          <div
+            class="profile__details_content_title flex w-full items-center justify-between"
+          >
+            <p class="profile__details_title">Your details</p>
+            <div
+              class="profile__details_edit_container flex items-center justify-center"
+            >
+              <img
+                class="profile__details_edit_image"
+                src="profile-page-icons/edit-05.png"
+              />
+            </div>
+          </div>
+          <div class="breakline"></div>
+          <div class="profile__details_content_personal_data_container flex">
+            <div
+              class="profile__details_list_titles flex flex-col justify-between"
+            >
+              <p class="font-semibold">First name</p>
+              <p class="font-semibold">Last name</p>
+              <p class="font-semibold">Email</p>
+              <p class="font-semibold">Phone number</p>
+            </div>
+            <div class="profile__details_list_member_info flex flex-col">
+              <p>
+                {{
+                  selectedCrewMember()?.name!.split(' ')[0] ||
+                    'First name not provided'
+                }}
+              </p>
+              <p>
+                {{
+                  selectedCrewMember()?.name!.split(' ')[1] ||
+                    'First name not provided'
+                }}
+              </p>
+              <p>
+                {{
+                  selectedCrewMember()?.name!.toLowerCase().split(' ')[0] ||
+                    'First name not provided'
+                }}.{{
+                  selectedCrewMember()?.name!.toLowerCase().split(' ')[1] ||
+                    'First name not provided'
+                }}&#64;{{ selectedCrewMember()?.agency!.toLowerCase() }}.com
+              </p>
+              <p>+49 1111 1111</p>
+            </div>
+          </div>
+          <div class="breakline"></div>
+          <div class="profile__details_content_personal_data_container flex">
+            <div class="profile__details_list_titles flex flex-col">
+              <p class="font-semibold">Agency</p>
+              <p class="font-semibold">ID</p>
+              <p class="font-semibold">Social</p>
+            </div>
+            <div class="profile__details_list_member_info flex flex-col">
+              <p>
+                {{ selectedCrewMember()?.agency }}
+              </p>
+              <p>
+                {{ selectedCrewMember()?.id }}
+              </p>
+              <div class="wikipedia_container flex items-center">
+                <img class="wikipedia_icon" src="profile-page-icons/wiki.png" />
+                <a
+                  class="wikipedia_text"
+                  target="_blank"
+                  href="{{ selectedCrewMember()?.wikipedia }}"
+                  >Wikipedia</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
