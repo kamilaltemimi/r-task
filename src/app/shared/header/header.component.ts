@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CrewService } from '@Services/crew/crew.service';
@@ -11,9 +11,7 @@ import { StorageService } from '@Services/storage/storage.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  get crewMemberData() {
-    return this.crewService.crewMemberData;
-  }
+  selectedCrewMember = computed(() => this.crewService.crewMemberData());
 
   constructor(
     private crewService: CrewService,
