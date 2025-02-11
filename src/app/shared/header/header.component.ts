@@ -26,6 +26,15 @@ export class HeaderComponent implements OnInit {
   }
 
   getCrewMemberDetails(): void {
+    const memberId =
+      this.activatedRoute.firstChild?.snapshot.paramMap.get('id');
+    if (memberId) {
+      this.crewService.getCrewData().subscribe((members) => {
+        const member = members.find((m) => m.id === memberId);
+        this.selectedCrewMember.set(member || null);
+      });
+    }
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
