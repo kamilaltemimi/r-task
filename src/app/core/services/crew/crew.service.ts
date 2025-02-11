@@ -11,8 +11,6 @@ import { CrewMember } from '@Interfaces/crew-member.interface';
 export class CrewService {
   private URL = environment.apiUrl;
 
-  crewMemberData = signal<CrewMember | null>(null);
-
   constructor(private http: HttpClient) {}
 
   getCrewData(): Observable<CrewMember[]> {
@@ -22,9 +20,5 @@ export class CrewService {
         return EMPTY;
       })
     );
-  }
-
-  setCrewMemberData(member: CrewMember): void {
-    this.crewMemberData.set(member);
   }
 }
