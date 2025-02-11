@@ -31,7 +31,6 @@ export class CrewComponent implements OnInit {
   }
 
   selectCrewMember(member: CrewMember): void {
-    this.crewService.setCrewMemberData(member);
     this.router.navigate([`profile/${member.id}`]);
   }
 }
