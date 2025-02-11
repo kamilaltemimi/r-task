@@ -1,38 +1,7 @@
-interface Fairings {
-  reused: boolean;
-  recovery_attempt: boolean;
-  recovered: boolean;
-  ships: string[];
-}
-
-interface Links {
-  patch: {
-    small: string;
-    large: string;
-  };
-  reddit: string;
-  flickr: string;
-  presskit: string;
-  webcast: string;
-  [key: string]: string | { [key: string]: string };
-}
-
-interface Core {
-  core_serial: string;
-  flight: number;
-  gridfins: boolean;
-  legless: boolean;
-  reused: boolean;
-  land_success: boolean;
-  landing_intent: boolean;
-  landing_type: string;
-  landing_vehicle: string;
-}
-
 export interface Launch {
   auto_update: boolean;
   capsules: any[];
-  cores: Core[];
+  cores: any[];
   crew: any[];
   date_local: string;
   date_precision: string;
@@ -40,12 +9,12 @@ export interface Launch {
   date_utc: string;
   details: string;
   failures: any[];
-  fairings: Fairings;
+  fairings: any[];
   flight_number: number;
   id: string;
   launch_library_id: string | null;
   launchpad: string;
-  links: Links;
+  links: any[];
   name: string;
   net: boolean;
   payloads: string[];
