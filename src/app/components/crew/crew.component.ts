@@ -6,6 +6,8 @@ import { CrewService } from '@Services/crew/crew.service';
 
 import { CrewMember } from '@Interfaces/crew-member.interface';
 
+import { CrewStore } from '@Core/store/crew-store';
+
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -21,6 +23,7 @@ export class CrewComponent implements OnInit, OnDestroy {
 
   constructor(
     private crewService: CrewService,
+    private crewStore: CrewStore,
     private router: Router
   ) {}
 
@@ -43,6 +46,7 @@ export class CrewComponent implements OnInit, OnDestroy {
   }
 
   selectCrewMember(member: CrewMember): void {
+    this.crewStore.updateSelectedCrewMember = member;
     this.router.navigate([`profile/${member.id}`]);
   }
 }

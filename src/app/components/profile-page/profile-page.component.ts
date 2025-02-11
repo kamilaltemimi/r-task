@@ -1,11 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { CrewService } from '../../core/services/crew/crew.service';
+import { Component, OnInit, Signal } from '@angular/core';
 
 import { CrewMember } from '@Core/interfaces/crew-member.interface';
 
-import { Subject, takeUntil } from 'rxjs';
+import { CrewStore } from '@Core/store/crew-store';
 
 @Component({
   selector: 'app-profile-page',
@@ -13,39 +10,15 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './profile-page.component.scss'
 })
 export class ProfilePageComponent implements OnInit {
-  selectedCrewMember = signal<CrewMember | null>(null);
+  selectedCrewMember!: Signal<CrewMember | null>;
 
-  private destroy$ = new Subject<void>();
-
-  constructor(
-    private crewService: CrewService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  constructor(private crewStore: CrewStore) {}
 
   ngOnInit(): void {
     this.getCrewMemberDetails();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   getCrewMemberDetails(): void {
-    const crewMemberId = this.activatedRoute.snapshot.params['id'];
-
-    this.crewService
-      .getCrewData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((crewMembers) => {
-        const foundCrewMember = crewMembers.find(
-          (member) => member.id === crewMemberId
-        );
-        if (foundCrewMember) {
-          this.selectedCrewMember.set(foundCrewMember);
-        } else {
-          console.error(`Crew member with ID ${crewMemberId} not found.`);
-        }
-      });
+    this.selectedCrewMember = this.crewStore.selectedMember;
   }
 }
