@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
@@ -18,8 +18,6 @@ import { Payload } from '@Interfaces/payload.interface';
 })
 export class StarlinkService {
   private URL = environment.apiUrl;
-
-  selectedStarlinkId = signal<string | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -83,15 +81,13 @@ export class StarlinkService {
     );
   }
 
-  getDetails(): Observable<Launch> {
-    return this.http
-      .get<Starlink>(`${this.URL}/starlink/${this.selectedStarlinkId()}`)
-      .pipe(
-        switchMap((starlinkData: Starlink) => {
-          const launchId = starlinkData.launch;
-          return this.getLaunchDetails(launchId!);
-        })
-      );
+  getDetails(starlinkId: string): Observable<Launch> {
+    return this.http.get<Starlink>(`${this.URL}/starlink/${starlinkId}`).pipe(
+      switchMap((starlinkData: Starlink) => {
+        const launchId = starlinkData.launch;
+        return this.getLaunchDetails(launchId!);
+      })
+    );
   }
 
   getPayloadMassByLaunchId(launchId: string): Observable<number | null> {

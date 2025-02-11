@@ -47,8 +47,6 @@ export class StarlinkComponent implements OnInit, OnDestroy {
   }
 
   selectStarlink(id: string): void {
-    this.starlinkService.selectedStarlinkId.set(id);
-    console.log(id);
     this.router.navigate([`starlink-stats/${id}`]);
   }
 }

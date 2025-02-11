@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 import { StarlinkService } from '@Services/starlink/starlink.service';
 
@@ -19,7 +20,10 @@ export class StarlinkStatsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private starlinkService: StarlinkService) {}
+  constructor(
+    private starlinkService: StarlinkService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getLaunchData();
@@ -31,8 +35,10 @@ export class StarlinkStatsComponent implements OnInit, OnDestroy {
   }
 
   getLaunchData(): void {
+    const starlinkId = this.activatedRoute.snapshot.params['id'];
+
     this.starlinkService
-      .getDetails()
+      .getDetails(starlinkId)
       .pipe(
         switchMap((launchData) => {
           this.launchDetails.set(launchData);
