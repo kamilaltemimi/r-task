@@ -29,16 +29,18 @@
           <p class="header__help_text font-semibold">Help</p>
         </div>
       </div>
-      <div class="header__user_info_container flex items-center">
-        <img
-          class="header__user_avatar"
-          src="{{ selectedCrewMember()?.image }}"
-          alt="avatar"
-        />
-        <p class="header__user_name">
-          {{ selectedCrewMember()?.name }}
-        </p>
-      </div>
+      @if (selectedCrewMember()) {
+        <div class="header__user_info_container flex items-center">
+          <img
+            class="header__user_avatar"
+            src="{{ selectedCrewMember()?.image }}"
+            alt="avatar"
+          />
+          <p class="header__user_name">
+            {{ selectedCrewMember()?.name }}
+          </p>
+        </div>
+      }
     </div>
 
     <div class="header__user_section_mobile">

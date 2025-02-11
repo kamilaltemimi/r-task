@@ -1,8 +1,10 @@
-import { Component, computed, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
+import { CrewMember } from '@Core/interfaces/crew-member.interface';
 
 import { CrewService } from '@Services/crew/crew.service';
-import { StorageService } from '@Services/storage/storage.service';
+import { filter, switchMap, map, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -11,21 +13,37 @@ import { StorageService } from '@Services/storage/storage.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  selectedCrewMember = computed(() => this.crewService.crewMemberData());
+  selectedCrewMember = signal<CrewMember | null>(null);
 
   constructor(
     private crewService: CrewService,
-    private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.loadCrewMember();
+    this.getCrewMemberDetails();
   }
 
-  private loadCrewMember(): void {
-    const savedMember = this.storageService.getMemberFromSessionStorage();
-    this.crewService.setCrewMemberData(savedMember);
+  getCrewMemberDetails(): void {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        switchMap(() => {
+          const childRoute = this.activatedRoute.firstChild;
+          return childRoute?.paramMap || EMPTY;
+        }),
+        filter((params) => params.has('id')),
+        switchMap((params) => {
+          const id = params.get('id')!;
+          return this.crewService
+            .getCrewData()
+            .pipe(map((members) => members.find((member) => member.id === id)));
+        })
+      )
+      .subscribe((member) => {
+        this.selectedCrewMember.set(member || null);
+      });
   }
 
   goToMainPage(): void {
