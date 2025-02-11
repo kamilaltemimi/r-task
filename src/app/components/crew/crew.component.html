@@ -5,7 +5,7 @@
     >
     <h1 class="crew__content_title">Select crew member</h1>
     <ul class="crew__content_list">
-      @for (member of crewData$ | async; track member.id) {
+      @for (member of crewDataList(); track member.id) {
         <li
           (click)="selectCrewMember(member)"
           class="crew__content_listitem flex items-center justify-center"

@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
 import { CrewService } from '@Services/crew/crew.service';
-import { StorageService } from '@Services/storage/storage.service';
 
 import { CrewMember } from '@Interfaces/crew-member.interface';
-
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-crew',
@@ -16,12 +13,11 @@ import { Observable } from 'rxjs';
   styleUrl: './crew.component.scss'
 })
 export class CrewComponent implements OnInit {
-  crewData$!: Observable<CrewMember[]>;
+  crewDataList = signal<CrewMember[] | null>(null);
 
   constructor(
     private crewService: CrewService,
-    private router: Router,
-    private storageService: StorageService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,11 +25,12 @@ export class CrewComponent implements OnInit {
   }
 
   private initializeCrewList(): void {
-    this.crewData$ = this.crewService.getCrewData();
+    this.crewService.getCrewData().subscribe((crew: CrewMember[]) => {
+      this.crewDataList.set(crew);
+    });
   }
 
   selectCrewMember(member: CrewMember): void {
-    this.storageService.saveMemberToSessionStorage(member);
     this.crewService.setCrewMemberData(member);
     this.router.navigate([`profile/${member.id}`]);
   }
