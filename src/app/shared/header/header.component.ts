@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CrewMember } from '@Core/interfaces/crew-member.interface';
 import { CrewService } from '@Core/services/crew/crew.service';
@@ -7,14 +7,13 @@ import { CrewService } from '@Core/services/crew/crew.service';
 import { CrewStore } from '@Core/store/crew-store';
 
 import {
-  of,
   map,
   filter,
   EMPTY,
   switchMap,
-  merge,
   takeUntil,
-  Subject
+  Subject,
+  catchError
 } from 'rxjs';
 
 @Component({
@@ -51,9 +50,13 @@ export class HeaderComponent implements OnInit {
         map((params) => params.get('id')),
         filter((id): id is string => !!id),
         switchMap((id) =>
-          this.crewService
-            .getCrewData()
-            .pipe(map((members) => members.find((member) => member.id === id)))
+          this.crewService.getCrewData().pipe(
+            map((members) => members.find((member) => member.id === id)),
+            catchError((error) => {
+              console.error(error);
+              return EMPTY;
+            })
+          )
         ),
         takeUntil(this.destroy$)
       )

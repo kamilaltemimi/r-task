@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { EMPTY, Observable, catchError, map, switchMap } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 
@@ -22,9 +21,13 @@ export class StarlinkService {
   constructor(private http: HttpClient) {}
 
   getStarlinkData(): Observable<StarlinkCategoryViewModel> {
-    return this.http
-      .get<StarlinkResponse[]>(`${this.URL}/starlink`)
-      .pipe(map((starlinks) => this.transformData(starlinks)));
+    return this.http.get<StarlinkResponse[]>(`${this.URL}/starlink`).pipe(
+      map((starlinks) => this.transformData(starlinks)),
+      catchError((error) => {
+        console.error(error);
+        return EMPTY;
+      })
+    );
   }
 
   private transformData(
@@ -77,6 +80,10 @@ export class StarlinkService {
     return this.http.get<Launch>(`${this.URL}/launches/${launchId}`).pipe(
       map((launch: Launch) => {
         return { ...launch, date_local: this.formatDate(launch.date_local) };
+      }),
+      catchError((error) => {
+        console.error(error);
+        return EMPTY;
       })
     );
   }
@@ -86,6 +93,10 @@ export class StarlinkService {
       switchMap((starlinkData: Starlink) => {
         const launchId = starlinkData.launch;
         return this.getLaunchDetails(launchId!);
+      }),
+      catchError((error) => {
+        console.error(error);
+        return EMPTY;
       })
     );
   }
@@ -95,6 +106,10 @@ export class StarlinkService {
       map((payloads: Payload[]) => {
         const payload = payloads.find((payload) => payload.launch === launchId);
         return payload ? payload.mass_kg : null;
+      }),
+      catchError((error) => {
+        console.error(error);
+        return EMPTY;
       })
     );
   }
