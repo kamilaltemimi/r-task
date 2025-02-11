@@ -4,7 +4,8 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CrewMember } from '@Core/interfaces/crew-member.interface';
 
 import { CrewService } from '@Services/crew/crew.service';
-import { filter, switchMap, map, EMPTY } from 'rxjs';
+
+import { filter, switchMap, map, EMPTY, merge, of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -26,29 +27,25 @@ export class HeaderComponent implements OnInit {
   }
 
   getCrewMemberDetails(): void {
-    const memberId =
-      this.activatedRoute.firstChild?.snapshot.paramMap.get('id');
-    if (memberId) {
-      this.crewService.getCrewData().subscribe((members) => {
-        const member = members.find((m) => m.id === memberId);
-        this.selectedCrewMember.set(member || null);
-      });
-    }
+    const initialId$ = of(
+      this.activatedRoute.firstChild?.snapshot.paramMap
+    ).pipe(map((params) => params?.get('id') || null));
 
-    this.router.events
+    const navigation$ = this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map(() => this.activatedRoute.firstChild?.paramMap || EMPTY),
+      switchMap((paramMap) => paramMap),
+      map((params) => params.get('id'))
+    );
+
+    merge(initialId$, navigation$)
       .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        switchMap(() => {
-          const childRoute = this.activatedRoute.firstChild;
-          return childRoute?.paramMap || EMPTY;
-        }),
-        filter((params) => params.has('id')),
-        switchMap((params) => {
-          const id = params.get('id')!;
-          return this.crewService
+        filter((id): id is string => !!id),
+        switchMap((id) =>
+          this.crewService
             .getCrewData()
-            .pipe(map((members) => members.find((member) => member.id === id)));
-        })
+            .pipe(map((members) => members.find((member) => member.id === id)))
+        )
       )
       .subscribe((member) => {
         this.selectedCrewMember.set(member || null);
