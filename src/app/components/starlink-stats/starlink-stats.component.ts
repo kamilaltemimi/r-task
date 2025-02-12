@@ -43,9 +43,9 @@ export class StarlinkStatsComponent implements OnInit, OnDestroy {
         switchMap((launchData) => {
           this.launchDetails.set(launchData);
           return this.starlinkService.getPayloadMassByLaunchId(launchData.id);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
-      .pipe(takeUntil(this.destroy$))
       .subscribe((mass: number | null) => {
         this.totalPayloadMass.set(mass);
       });
